@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+message Vec2d {
+    double x = 1;
+    double y = 2;
+}
+
+message CircularRegion {
+    Vec2d center = 1;
+    double radius = 2;
+}
+
+message PolygonRegion {
+    repeated Vec2d points = 1;
+}
+
+message VASTClientMessage {
+    oneof message {
+        PubSubMessage publish = 1;
+    }
+}
+
+message VASTServerMessage {
+    oneof message {
+        PubSubMessage publication = 1;
+    }
+}
+
+message PubSubMessage {
+    bytes payload = 1;
+    optional string channel = 2;
+    oneof aoi {
+        CircularRegion circular = 3;
+        PolygonRegion polygon = 4;
+    }
+}
